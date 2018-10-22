@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--配置springMVC-->
+    <!--1.开启springMVC注解模式-->
+    <!--简化配置-->
+     <!--（1）自动注册DefaultAnoatationHandlerMapping,AnoatationMethodHandlerAdatper，结局了controller注解的使用前提配置。-->
+     <!--（2）提供一些列：数字和日期的format，xml，json默认读写支持-->
+
+    <mvc:annotation-driven/>
+
+    <!--2.静态资源默认servlet配置，将静态资源请求转为web容器处理-->
+        <!--（1）加入对静态资源的处理：js，gif，png-->
+        <!--（2）允许使用“/"做整体映射-->
+
+    <mvc:default-servlet-handler/>
+
+    <!--扫描service包下所有使用注解的类型-->
+    <context:component-scan base-package="com.haha.controller"/>
+    <context:component-scan base-package="com.haha.service"/>
+
+    <!--使用springmvc注解，被context：component-scan包含-->
+
+    <context:annotation-config/>
+
+    <!--3.配置jsp显示viewResolver，根据前后缀获取view物理文件路径-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+
+    <!-- 多部分文件上传 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="2147483648" />
+        <property name="maxInMemorySize" value="4096" />
+        <property name="defaultEncoding" value="UTF-8"/>
+    </bean>
+</beans>
